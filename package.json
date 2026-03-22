@@ -19,7 +19,7 @@
     "install-windows": "npm install && cd src && npm install && ..\\node_modules\\.bin\\electron-rebuild -f -w node-pty && cd ..",
     "prebuild-linux": "rsync -a --info=progress2 src/ prebuild-src --exclude node_modules && node prebuild-minify.js && cd prebuild-src && npm install",
     "prebuild-darwin": "rsync -a src/ prebuild-src --exclude node_modules && node prebuild-minify.js && cd prebuild-src && npm install",
-    "prebuild-windows": "mkdir prebuild-src && xcopy src\\* prebuild-src\\ /E /C /Q /Y && node prebuild-minify.js && cd prebuild-src && npm install",
+    "prebuild-windows": "mkdir prebuild-src && xcopy src\\* prebuild-src\\ /E /C /Q /Y && node prebuild-minify.js && cd prebuild-src && npm install --ignore-scripts && ..\\node_modules\\.bin\\electron-rebuild -f -w node-pty",
     "build-linux": "./node_modules/.bin/electron-builder build -l --x64 --ia32 --arm64 --armv7l",
     "build-darwin": "./node_modules/.bin/electron-builder build -m",
     "build-windows": "node_modules\\.bin\\electron-builder build -w",
@@ -52,7 +52,8 @@
       "app": "prebuild-src"
     },
     "forceCodeSigning": false,
-    "npmRebuild": true,
+    "npmRebuild": false,
+    "nodeGypRebuild": false,
     "artifactName": "eDEX-UI-${os}-${arch}.${ext}",
     "linux": {
       "target": [
@@ -110,5 +111,8 @@
   },
   "optionalDependencies": {
     "cson-parser": "4.0.9"
+  },
+  "devDependencies": {
+    "node-gyp": "^12.2.0"
   }
 }
