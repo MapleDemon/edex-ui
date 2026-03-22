@@ -146,7 +146,8 @@ class Terminal {
                 return true;
             });
             // Prevent soft-keyboard on touch devices #733
-            document.querySelectorAll('.xterm-helper-textarea').forEach(textarea => textarea.setAttribute('readonly', 'readonly'))
+            // Use inputMode="none" instead of readonly to avoid blocking IME composition (e.g. Chinese input)
+            document.querySelectorAll('.xterm-helper-textarea').forEach(textarea => textarea.setAttribute('inputmode', 'none'))
             this.term.focus();
 
             this.Ipc.send("terminal_channel-"+this.port, "Renderer startup");
